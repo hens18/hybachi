@@ -186,10 +186,10 @@ section { padding: 100px 0; }
   box-shadow: 0 20px 60px rgba(255,45,149,.25), 0 0 0 1px rgba(255,45,149,.3);
 }
 .mq-card { cursor: pointer; }
-.mq-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.mq-card:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
 .mq-card.selected {
-  opacity: 1; transform: scale(1.07); border-color: var(--cyan);
-  box-shadow: 0 24px 70px rgba(62,230,255,.22), 0 0 0 1px rgba(62,230,255,.45);
+  opacity: 1; transform: scale(1.07); border-color: rgba(255,45,149,.6);
+  box-shadow: 0 20px 60px rgba(255,45,149,.25), 0 0 0 1px rgba(255,45,149,.3);
 }
 .marquee.has-selection .mq-card:not(.selected) { opacity: .4; }
 .mq-top { display: flex; align-items: center; gap: 12px; }
@@ -250,14 +250,25 @@ section { padding: 100px 0; }
 .skyline path { fill: none; stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: var(--len, 2000); stroke-dashoffset: var(--len, 2000); transition: stroke-dashoffset 3.2s var(--ease-out); }
 .skyline.drawn path { stroke-dashoffset: 0; }
 
-/* Food pop: every showcased dish lifts, glows and zooms on hover */
+/* Food pop: every showcased dish lifts, glows and zooms on hover, or when clicked/tapped (.popped) */
 .media { overflow: hidden; }
 .media img { transition: transform .6s var(--ease-out), filter .6s var(--ease-out); }
 .menu-grid .dish, .steps .step {
+  cursor: pointer;
   transition: opacity .8s, transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color .45s var(--ease-out);
 }
+.menu-grid .dish:focus-visible, .steps .step:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
 .review-photos { overflow: visible; }
 .review-photos img, .mq-card img { transition: transform .5s var(--ease-out), filter .5s var(--ease-out), box-shadow .5s var(--ease-out); }
+.menu-grid .dish.popped, .steps .step.popped {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(255,45,149,.6);
+  box-shadow: 0 26px 60px -18px rgba(255,45,149,.45), 0 0 0 1px rgba(255,45,149,.35), 0 0 40px rgba(255,122,26,.18);
+  position: relative; z-index: 2;
+}
+.menu-grid .dish.popped .media img, .steps .step.popped .media img { transform: scale(1.08); filter: saturate(1.2) brightness(1.06); }
+.dish.popped h3, .step.popped h3 { color: #fff; text-shadow: 0 0 18px rgba(255,45,149,.55); }
+.dish.popped .tag { color: var(--pink); }
 @media (hover: hover) {
   .menu-grid .dish:hover, .steps .step:hover {
     transform: translateY(-10px) scale(1.02);

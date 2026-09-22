@@ -182,3 +182,26 @@
   const foot = document.getElementById("footSocial");
   if (foot) foot.innerHTML = live.filter(([, v]) => v.profile).map(([key, v]) => ` &middot; ${link(v.profile, names[key] || key, "")}`).join("");
 })();
+
+// ---- Food cards: click or tap to pop one (same look as hover); click again, elsewhere, or Esc to let go ----
+(() => {
+  const items = [...document.querySelectorAll(".menu-grid .dish, .steps .step")];
+  if (!items.length) return;
+  let popped = null;
+  const pop = (el) => {
+    if (popped) { popped.classList.remove("popped"); popped.setAttribute("aria-pressed", "false"); }
+    popped = el === popped ? null : el;
+    if (popped) { popped.classList.add("popped"); popped.setAttribute("aria-pressed", "true"); }
+  };
+  items.forEach((el) => {
+    el.tabIndex = 0;
+    el.setAttribute("role", "button");
+    el.setAttribute("aria-pressed", "false");
+    el.addEventListener("click", () => pop(el));
+    el.addEventListener("keydown", (e) => {
+      if (e.target === el && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); pop(el); }
+    });
+  });
+  document.addEventListener("click", (e) => { if (popped && !e.target.closest(".menu-grid .dish, .steps .step")) pop(popped); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && popped) pop(popped); });
+})();
