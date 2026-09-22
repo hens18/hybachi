@@ -1,51 +1,13 @@
-// Reviews data. Replace the placeholder entries below with real customer
-// reviews (copy the text, first name + last initial, date, and star rating).
-// Set `placeholder: false` (or delete the field) on real reviews so the
-// "Placeholder" tag disappears. The summary score and bars are computed from
-// this list automatically.
-const REVIEWS = [
-  {
-    name: "Customer A.",
-    rating: 5,
-    date: "2026-09-01",
-    source: "Yelp",
-    text: "Placeholder review. Paste a real customer review here.",
-    photo: "assets/img/combo-steak-shrimp.jpg",
-    placeholder: true,
-  },
-  {
-    name: "Customer B.",
-    rating: 4,
-    date: "2026-08-20",
-    source: "Yelp",
-    text: "Placeholder review. Paste a real customer review here.",
-    photo: "assets/img/hibachi-burrito.jpg",
-    placeholder: true,
-  },
-  {
-    name: "Customer C.",
-    rating: 5,
-    date: "2026-08-12",
-    source: "Google",
-    text: "Placeholder review. Paste a real customer review here.",
-    placeholder: true,
-  },
-  {
-    name: "Customer D.",
-    rating: 3,
-    date: "2026-07-30",
-    source: "Yelp",
-    text: "Placeholder review. Paste a real customer review here.",
-    photo: "assets/img/fried-rice.jpg",
-    placeholder: true,
-  },
-];
+// Renders reviews.html from REVIEWS (js/reviews-data.js).
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const stars = (n) => "★".repeat(Math.round(n)) + `<span class="off">${"★".repeat(5 - Math.round(n))}</span>`;
+const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+const paras = (t) => t.split(/\n\s*\n/).map((p) => `<p>${esc(p)}</p>`).join("");
+const byDate = (a, b) => b.date.localeCompare(a.date);
 
 (() => {
   const list = document.getElementById("reviewList");
-  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const stars = (n) => "★".repeat(Math.round(n)) + `<span class="off">${"★".repeat(5 - Math.round(n))}</span>`;
-  const fmt = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  if (!list) return;
 
   // Summary
   const total = REVIEWS.length;
@@ -61,18 +23,20 @@ const REVIEWS = [
   // Cards
   const render = (f) => {
     const rows = REVIEWS
-      .filter((r) => f === "all" || (f === "photos" ? r.photo : f === "low" ? r.rating <= 3 : r.rating === +f))
-      .sort((a, b) => b.date.localeCompare(a.date));
+      .filter((r) => f === "all" || (f === "photos" ? r.photos?.length : f === "low" ? r.rating <= 3 : r.rating === +f))
+      .sort(byDate);
     list.innerHTML = rows.length ? rows.map((r) => `
       <article class="review">
-        ${r.placeholder ? '<span class="placeholder-flag">Placeholder</span>' : ""}
         <header>
           <div class="avatar">${esc(r.name[0])}</div>
-          <div><h3>${esc(r.name)}</h3><time datetime="${esc(r.date)}">${fmt(r.date)}</time> <span class="src">· ${esc(r.source)}</span></div>
+          <div>
+            <h3>${esc(r.name)}</h3>
+            <span class="src">${esc(r.location)} · ${esc(r.source)}</span>
+          </div>
         </header>
-        <div class="stars">${stars(r.rating)}</div>
-        <p>${esc(r.text)}</p>
-        ${r.photo ? `<img src="${esc(r.photo)}" alt="Photo from ${esc(r.name)}'s review" loading="lazy">` : ""}
+        <div><span class="stars">${stars(r.rating)}</span> <time datetime="${esc(r.date)}">${fmtDate(r.date)}</time></div>
+        ${r.text ? paras(r.text) : `<p class="muted-note">${r.badge ? esc(r.badge) + ". " : ""}<a href="${YELP_URL}" target="_blank" rel="noopener">Read the full review on Yelp &rarr;</a></p>`}
+        ${r.photos?.length ? `<div class="review-photos">${r.photos.map((p) => `<img src="${esc(p)}" alt="Food photo from ${esc(r.name)}'s review" loading="lazy">`).join("")}</div>` : ""}
       </article>`).join("") : `<p style="color:var(--muted)">No reviews match this filter yet.</p>`;
   };
 
