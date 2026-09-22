@@ -18,15 +18,16 @@ assets/                 everything the page loads
   img/                  food, truck, logo, hero poster, step photos
   img/reviews/          photos from customer reviews
   video/hero-scrub.mp4  hero video, encoded for scroll scrubbing
-source/                 originals, NOT loaded by the page
+source/                 originals, NOT loaded by the page and NOT published
   higgsfield/           raw AI generations (hero video, start frame, step photos, ending frame)
   photos/               reference photos (menu board)
 ```
 
 ## Hosting
 
-Publish the repository root. `source/` is not linked from the page; it is kept only as the
-master copies used to make the files in `assets/`.
+GitHub Pages, deployed by `.github/workflows/pages.yml` on every push. The workflow publishes
+only `index.html`, `css/`, `js/` and `assets/`; `source/` stays in the repo and is never published.
+Live at https://hens18.github.io/hybachi/ once Settings > Pages > Source is set to "GitHub Actions".
 
 ## Re-making the web files from `source/`
 
