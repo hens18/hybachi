@@ -1,4 +1,4 @@
-// Renders reviews.html from REVIEWS (js/reviews-data.js).
+// Renders the full review list on the homepage from REVIEWS (js/reviews-data.js).
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const stars = (n) => "★".repeat(Math.round(n)) + `<span class="off">${"★".repeat(5 - Math.round(n))}</span>`;
 const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });

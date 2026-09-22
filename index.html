@@ -220,15 +220,15 @@
       </div>
       <div class="steps">
         <figure class="step reveal">
-          <img src="assets/img/step-cooked.jpg" onerror="this.onerror=null;this.src='assets/img/steak-noodles.jpg'" alt="Filet mignon, shrimp and fried rice searing on the flat-top" loading="lazy">
+          <img src="assets/img/step-cooked.jpg" data-alt="https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193136_e066e61e-23fe-4b55-8786-034e9f746fb5_min.webp|https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193136_e066e61e-23fe-4b55-8786-034e9f746fb5.png|assets/img/steak-noodles.jpg" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n;else this.onerror=null" alt="Filet mignon, shrimp and fried rice searing on the flat-top" loading="lazy">
           <figcaption><h3>Cooked on the flat-top</h3><p>Filet mignon, shrimp and chicken hit the flat-top when you order, seared hot.</p></figcaption>
         </figure>
         <figure class="step reveal">
-          <img src="assets/img/step-packed.jpg" onerror="this.onerror=null;this.src='assets/img/combo-steak-shrimp.jpg'" alt="A takeout box of fried rice, noodles, filet mignon and shrimp with yum yum sauce" loading="lazy">
+          <img src="assets/img/step-packed.jpg" data-alt="https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193137_86c75ba8-9c63-4cb4-81aa-5c13b85dd646_min.webp|https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193137_86c75ba8-9c63-4cb4-81aa-5c13b85dd646.png|assets/img/combo-steak-shrimp.jpg" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n;else this.onerror=null" alt="A takeout box of fried rice, noodles, filet mignon and shrimp with yum yum sauce" loading="lazy">
           <figcaption><h3>Packed to travel</h3><p>Fried rice or noodles and hibachi vegetables go in first, then the protein on top.</p></figcaption>
         </figure>
         <figure class="step reveal">
-          <img src="assets/img/step-served.jpg" onerror="this.onerror=null;this.src='assets/img/hibachi-burrito.jpg'" alt="A hibachi burrito and a takeout box waiting on the truck's window ledge" loading="lazy">
+          <img src="assets/img/step-served.jpg" data-alt="https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193136_1a85ee20-6d3d-450c-9d03-84622fdf0b78_min.webp|https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/hf_20260922_193136_1a85ee20-6d3d-450c-9d03-84622fdf0b78.png|assets/img/hibachi-burrito.jpg" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n;else this.onerror=null" alt="A hibachi burrito and a takeout box waiting on the truck's window ledge" loading="lazy">
           <figcaption><h3>Served to you</h3><p>Handed over through the truck window, still steaming. Add yum yum sauce for $1.50.</p></figcaption>
         </figure>
       </div>
@@ -246,8 +246,30 @@
     <div class="marquee" id="marquee" aria-label="Customer reviews">
       <div class="marquee-track" id="marqueeTrack"></div>
     </div>
-    <div class="wrap marquee-cta">
-      <a href="reviews.html" class="btn btn-ghost">Read all reviews</a>
+
+    <div class="wrap">
+      <details class="all-reviews" id="allReviews">
+        <summary class="btn btn-ghost"><span class="when-closed">Read all reviews</span><span class="when-open">Hide reviews</span></summary>
+        <div class="all-reviews-body">
+          <div class="summary">
+            <div class="score">
+              <b id="avg">&ndash;</b>
+              <div class="stars" id="avgStars"></div>
+              <small id="count"></small>
+            </div>
+            <div class="bars" id="bars"></div>
+            <a href="https://www.yelp.com/writeareview/biz/myami-bachi-miami" target="_blank" rel="noopener" class="btn btn-hot">Write a review</a>
+          </div>
+          <div class="filters" id="filters">
+            <button class="chip on" data-f="all">All</button>
+            <button class="chip" data-f="5">5 stars</button>
+            <button class="chip" data-f="4">4 stars</button>
+            <button class="chip" data-f="low">3 and under</button>
+            <button class="chip" data-f="photos">With photos</button>
+          </div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -290,7 +312,7 @@
         </dl>
         <div class="hero-ctas" style="margin-top:28px">
           <a href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener" class="btn btn-hot">Get directions</a>
-          <a href="reviews.html" class="btn btn-ghost">Reviews</a>
+          <a href="#reviews" class="btn btn-ghost">Reviews</a>
         </div>
       </div>
       <svg class="skyline" id="skyline" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
@@ -305,12 +327,13 @@
   <footer>
     <div class="wrap">
       <span>&copy; <span id="year"></span> Myami Bachi. 12750 SW 128th St, Miami, FL. Some imagery on this site is AI generated; the food photos are real.</span>
-      <span class="foot-links"><a href="reviews.html">Reviews</a> &middot; <a href="#menu">Menu</a><span id="footSocial"></span></span>
+      <span class="foot-links"><a href="#reviews">Reviews</a> &middot; <a href="#menu">Menu</a><span id="footSocial"></span></span>
     </div>
   </footer>
 
   <script src="js/reviews-data.js"></script>
   <script src="js/social-data.js"></script>
+  <script src="js/reviews.js"></script>
   <script src="js/main.js"></script>
   <script src="js/hero.js"></script>
 </body>

@@ -1,4 +1,4 @@
-// Shared review data, used by the homepage reviews carousel and reviews.html.
+// Shared review data, used by the homepage reviews carousel and the full review list.
 // To add a review, copy one entry and fill it in. Blank lines in `text`
 // become paragraph breaks. `photos` is optional. Leave `text` empty when you
 // only have the rating; the card then links to the full review on Yelp.

@@ -50,7 +50,7 @@
         ? `<p class="mq-text">&ldquo;${esc(r.text.replace(/\s*\n\s*\n\s*/g, " "))}&rdquo;</p>`
         : `<p class="mq-text mq-empty">${r.badge ? esc(r.badge) + ". " : ""}Full review on Yelp.</p>`}
       ${r.photos?.length ? `<img src="${esc(r.photos[0])}" alt="Food photo from ${esc(r.name)}'s review" loading="lazy">` : ""}
-      <a class="mq-more" href="${r.text ? "reviews.html" : YELP_URL}"${r.text ? "" : ' target="_blank" rel="noopener"'}>Read more &rarr;</a>
+      <a class="mq-more" href="${r.text ? "#allReviews" : YELP_URL}"${r.text ? "" : ' target="_blank" rel="noopener"'}>Read more &rarr;</a>
     </article>`;
 
   const set = [...REVIEWS].sort((a, b) => b.date.localeCompare(a.date)).map(card).join("");
@@ -62,6 +62,16 @@
     marquee.classList.add("static");
     return;
   }
+
+  // "Read more" opens the full review list below the carousel.
+  track.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href="#allReviews"]');
+    if (!a) return;
+    e.preventDefault();
+    const all = document.getElementById("allReviews");
+    all.open = true;
+    all.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   const cards = [...track.children];
   const SPEED = 40; // px per second

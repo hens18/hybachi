@@ -8,6 +8,11 @@
   const VIDEO_BYTES = 6000000; // fallback when Content-Length is missing; update to the real size
   const POSTER = "assets/img/hero-poster.jpg";
   const POSTER_FALLBACK = "assets/img/truck.jpg";
+  // The approved Higgsfield generations. Used straight from Higgsfield until the
+  // local copies above are added to assets/ (the local files always win).
+  const HF = "https://d8j0ntlcm91z4.cloudfront.net/user_3DIPB9u9Vmf3aGnCOqwMyZykmRt/";
+  const REMOTE_VIDEO = HF + "hf_20260922_193309_d63d6182-ee11-4cc4-9fb7-68986ae25f23.mp4";
+  const REMOTE_POSTER = HF + "hf_20260922_192551_67b4fba9-7f34-465a-9908-3c04566ff176.png";
 
   // Must match the media queries in css/styles.css character for character.
   const GATES = [
@@ -120,7 +125,10 @@
     seekBusy = false;
     if (pendingTime !== null) { const t = pendingTime; pendingTime = null; requestSeek(t); }
   });
-  video.addEventListener("error", () => { seekBusy = false; pendingTime = null; failVideo(); });
+  video.addEventListener("error", () => {
+    seekBusy = false; pendingTime = null;
+    if (!triedRemote) streamRemote(); else failVideo();
+  });
 
   // ---- Eased display time, frame-rate independent; the loop rests when converged ----
   let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
@@ -155,12 +163,19 @@
     const startBlobFetch = () => {
       if (started) return;
       started = true;
-      loadHeroBlob().catch(failVideo);
+      loadHeroBlob().catch(streamRemote);
     };
-    const img = new Image();
-    img.onload = () => { posterLayer.style.backgroundImage = `url('${POSTER}')`; startBlobFetch(); };
-    img.onerror = () => { posterLayer.style.backgroundImage = `url('${POSTER_FALLBACK}')`; startBlobFetch(); };
-    img.src = POSTER;
+    // Poster: local copy, then the Higgsfield frame, then the real truck photo.
+    const posters = [POSTER, REMOTE_POSTER, POSTER_FALLBACK];
+    const tryPoster = () => {
+      const src = posters.shift();
+      if (!src) { startBlobFetch(); return; }
+      const img = new Image();
+      img.onload = () => { posterLayer.style.backgroundImage = `url('${src}')`; startBlobFetch(); };
+      img.onerror = tryPoster;
+      img.src = src;
+    };
+    tryPoster();
     setTimeout(startBlobFetch, 4000);
   }
 
@@ -193,6 +208,24 @@
     video.src = URL.createObjectURL(new Blob(chunks, { type: "video/mp4" }));
     video.load();
     video.addEventListener("canplay", () => {
+      requestSeek(heroProgress() * video.duration);
+      stage.classList.remove("loading");
+      stage.classList.add("video-ready");
+    }, { once: true });
+  }
+
+  // No local copy: stream the approved video straight from Higgsfield.
+  // Browsers play and seek it without CORS; it swaps to the local file once that exists.
+  let triedRemote = false;
+  function streamRemote() {
+    if (triedRemote) { failVideo(); return; }
+    triedRemote = true;
+    stage.classList.add("loading");
+    ring.style.setProperty("--ld", 60);
+    video.preload = "auto";
+    video.src = REMOTE_VIDEO;
+    video.load();
+    video.addEventListener("loadeddata", () => {
       requestSeek(heroProgress() * video.duration);
       stage.classList.remove("loading");
       stage.classList.add("video-ready");
