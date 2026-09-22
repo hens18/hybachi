@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Myami Bachi | Hibachi Food Truck, Miami</title>
+  <meta name="description" content="Myami Bachi: fire-grilled hibachi steak, shrimp, chicken, fried rice and hibachi burritos from a Miami food truck.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="Myami Bachi logo"><span>Myami <b>Bachi</b></span></a>
+      <ul class="nav-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#process">How It's Made</a></li>
+        <li><a href="#visit">Find the Truck</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+      <a href="#visit" class="btn btn-hot">Order Now</a>
+      <button class="menu-toggle" aria-label="Open menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- HERO: 3D wrapper. Drop your loop at assets/video/hero-loop.mp4 and it
+       replaces the image reel automatically (cooked -> packed -> served). -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Miami's hibachi food truck</span>
+          <h1>Straight off the <span class="neon">flat-top</span> to your hands.</h1>
+          <p class="lede">Steak, shrimp and chicken seared to order, piled on garlic fried rice and yakisoba, or rolled into a burrito.</p>
+          <div class="hero-ctas">
+            <a href="#menu" class="btn btn-hot">See the Menu</a>
+            <a href="reviews.html" class="btn btn-ghost">Read Reviews</a>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="screen" id="screen">
+            <div class="badge-3d">Fresh off the grill</div>
+            <div class="screen-inner">
+              <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/img/steak-noodles.jpg" hidden>
+                <source src="assets/video/hero-loop.mp4" type="video/mp4">
+              </video>
+              <div class="reel" id="reel">
+                <img src="assets/img/steak-noodles.jpg" alt="Hibachi steak and yakisoba noodles on the grill" class="on">
+                <img src="assets/img/combo-steak-shrimp.jpg" alt="Steak and shrimp hibachi combo packed in a to-go box">
+                <img src="assets/img/hibachi-burrito.jpg" alt="Hibachi shrimp burrito served in hand">
+              </div>
+              <div class="screen-glare"></div>
+            </div>
+            <div class="reel-steps" id="reelSteps">
+              <span class="on">Cooked</span><span>Packed</span><span>Served</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pill" id="pill" aria-label="Featured dishes">
+          <button class="on" data-i="0" aria-label="Steak and noodles"><img src="assets/img/steak-noodles.jpg" alt=""></button>
+          <button data-i="1" aria-label="Steak and shrimp combo"><img src="assets/img/combo-steak-shrimp.jpg" alt=""></button>
+          <button data-i="2" aria-label="Hibachi burrito"><img src="assets/img/hibachi-burrito.jpg" alt=""></button>
+        </div>
+      </div>
+
+      <div class="hero-meta">
+        <div>Now serving<strong id="dishName">Steak &amp; Yakisoba</strong></div>
+        <div>Open nightly<strong>6:00 PM to 11:30 PM</strong></div>
+        <div>Location<strong>Miami, FL</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">The menu</span>
+        <h2>Fire-grilled favorites</h2>
+        <p>Every plate is cooked to order on the flat-top. Prices and full menu coming soon.</p>
+      </div>
+      <div class="menu-grid">
+        <article class="dish reveal">
+          <img src="assets/img/combo-steak-shrimp.jpg" alt="Steak and shrimp hibachi combo">
+          <div class="dish-body">
+            <h3>Steak &amp; Shrimp Combo</h3>
+            <p>Seared steak and garlic-butter shrimp over fried rice with yakisoba and grilled veggies.</p>
+            <span class="tag">Best seller</span>
+          </div>
+        </article>
+        <article class="dish reveal">
+          <img src="assets/img/hibachi-burrito.jpg" alt="Hibachi burrito cut in half">
+          <div class="dish-body">
+            <h3>Hibachi Burrito</h3>
+            <p>Hibachi shrimp or chicken and fried rice wrapped tight with yum yum sauce.</p>
+            <span class="tag">Grab &amp; go</span>
+          </div>
+        </article>
+        <article class="dish reveal">
+          <img src="assets/img/steak-noodles.jpg" alt="Hibachi steak with noodles">
+          <div class="dish-body">
+            <h3>Steak &amp; Yakisoba</h3>
+            <p>Tender cubed steak seared hot, tossed with savory yakisoba noodles.</p>
+            <span class="tag">Hearty</span>
+          </div>
+        </article>
+        <article class="dish reveal">
+          <img src="assets/img/fried-rice.jpg" alt="Hibachi fried rice with egg and carrots">
+          <div class="dish-body">
+            <h3>Hibachi Fried Rice</h3>
+            <p>Egg, carrots and garlic butter fried on the flat-top. Add any protein.</p>
+            <span class="tag">Side or main</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How it's made</span>
+        <h2>Cooked. Packed. Served.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><h3>Cooked on the flat-top</h3><p>Proteins hit the grill the moment you order, seared hot with garlic butter and house sauces.</p></div>
+        <div class="step reveal"><h3>Packed to travel</h3><p>Rice, noodles and veggies go in first, then the protein on top so it stays hot and crisp.</p></div>
+        <div class="step reveal"><h3>Served to you</h3><p>Handed over through the truck window, still steaming. Yum yum sauce on the side.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit">
+      <div class="visit-card reveal">
+        <h2>Find the truck</h2>
+        <dl>
+          <div><dt>Hours</dt><dd>Nightly, 6:00 PM to 11:30 PM</dd></div>
+          <div><dt>Where</dt><dd>Miami, FL. Follow us for tonight's spot.</dd></div>
+          <div><dt>Order</dt><dd>Takeout and delivery available</dd></div>
+        </dl>
+        <div class="hero-ctas" style="margin-top:28px">
+          <a href="https://www.yelp.com/biz/myami-bachi-miami" target="_blank" rel="noopener" class="btn btn-hot">Order on Yelp</a>
+          <a href="reviews.html" class="btn btn-ghost">Reviews</a>
+        </div>
+      </div>
+      <img class="reveal" src="assets/img/combo-steak-shrimp.jpg" alt="Hibachi combo in a takeout container">
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>&copy; <span id="year"></span> Myami Bachi. Miami, FL.</span>
+      <span><a href="reviews.html">Reviews</a> &middot; <a href="#menu">Menu</a></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

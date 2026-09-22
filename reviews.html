@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews | Myami Bachi</title>
+  <meta name="description" content="What customers are saying about Myami Bachi, Miami's hibachi food truck.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="Myami Bachi logo"><span>Myami <b>Bachi</b></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#menu">Menu</a></li>
+        <li><a href="index.html#process">How It's Made</a></li>
+        <li><a href="index.html#visit">Find the Truck</a></li>
+        <li><a href="reviews.html" class="active">Reviews</a></li>
+      </ul>
+      <a href="index.html#visit" class="btn btn-hot">Order Now</a>
+      <button class="menu-toggle" aria-label="Open menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Reviews</span>
+      <h1>What Miami is saying</h1>
+      <p>Straight from the people who ate it.</p>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding-bottom:100px">
+    <div class="summary reveal">
+      <div class="score">
+        <b id="avg">–</b>
+        <div class="stars" id="avgStars"></div>
+        <small id="count"></small>
+      </div>
+      <div class="bars" id="bars"></div>
+      <a href="https://www.yelp.com/writeareview/biz/myami-bachi-miami" target="_blank" rel="noopener" class="btn btn-hot">Write a review</a>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="chip on" data-f="all">All</button>
+      <button class="chip" data-f="5">5 stars</button>
+      <button class="chip" data-f="4">4 stars</button>
+      <button class="chip" data-f="low">3 and under</button>
+      <button class="chip" data-f="photos">With photos</button>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="cta-band reveal">
+      <h2>Ate with us? Tell people about it.</h2>
+      <a href="https://www.yelp.com/biz/myami-bachi-miami" target="_blank" rel="noopener" class="btn btn-hot">Review us on Yelp</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>&copy; <span id="year"></span> Myami Bachi. Miami, FL.</span>
+      <span><a href="index.html">Home</a> &middot; <a href="index.html#menu">Menu</a></span>
+    </div>
+  </footer>
+
+  <script src="js/reviews.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
