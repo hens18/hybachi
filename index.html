@@ -6,14 +6,21 @@
   <title>Myami Bachi (Myamibachi) | Hibachi Food Truck, Miami</title>
   <meta name="description" content="Myami Bachi (Myamibachi): Japanese teppanyaki food truck at 12750 SW 128th St, Miami. Fire-grilled hibachi steak, shrimp, chicken, fried rice and hibachi burritos from a Miami food truck.">
   <link rel="icon" href="assets/img/logo.png">
+  <meta name="theme-color" content="#120a1a">
+  <!-- DEPLOY STEP: patch og:url and og:image with the live absolute URL -->
+  <meta property="og:title" content="Myami Bachi | Kendall's hibachi truck">
+  <meta property="og:description" content="Filet mignon, shrimp and the hibachi burrito. 12750 SW 128th St, Miami. Open nightly, 6 to 11:30.">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Pacifico&family=Outfit:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div class="env" aria-hidden="true"></div>
 
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="wrap">
       <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="Myami Bachi logo"><span>Myami <b>Bachi</b></span></a>
       <ul class="nav-links">
@@ -22,61 +29,67 @@
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#visit">Find the Truck</a></li>
       </ul>
-      <a href="#visit" class="btn btn-hot">Order Now</a>
+      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener" class="btn btn-hot">Get directions</a>
       <button class="menu-toggle" aria-label="Open menu">&#9776;</button>
     </div>
   </nav>
 
-  <!-- HERO: 3D wrapper. Drop your loop at assets/video/hero-loop.mp4 and it
-       replaces the image reel automatically (cooked -> packed -> served). -->
-  <header class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <span class="eyebrow">Miami's hibachi food truck</span>
-          <h1>Straight off the <span class="neon">flat-top</span> to your hands.</h1>
-          <p class="lede">Filet mignon, shrimp and chicken seared to order, piled on fried rice and noodles, or rolled into the hibachi burrito.</p>
-          <div class="hero-ctas">
-            <a href="#menu" class="btn btn-hot">See the Menu</a>
-            <a href="reviews.html" class="btn btn-ghost">Read Reviews</a>
-          </div>
-        </div>
+  <a class="skip" href="#main">Skip to content</a>
 
-        <div class="stage">
-          <div class="screen" id="screen">
-            <div class="badge-3d">Fresh off the grill</div>
-            <div class="screen-inner">
-              <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/img/steak-noodles.jpg" hidden>
-                <source src="assets/video/hero-loop.mp4" type="video/mp4">
-              </video>
-              <div class="reel" id="reel">
-                <img src="assets/img/steak-noodles.jpg" alt="Filet mignon and noodles on the grill" class="on">
-                <img src="assets/img/combo-steak-shrimp.jpg" alt="Steak and shrimp hibachi combo packed in a to-go box">
-                <img src="assets/img/hibachi-burrito.jpg" alt="Hibachi shrimp burrito served in hand">
-              </div>
-              <div class="screen-glare"></div>
-            </div>
-            <div class="reel-steps" id="reelSteps">
-              <span class="on">Cooked</span><span>Packed</span><span>Served</span>
-            </div>
-          </div>
-        </div>
+  <!-- HERO: scroll-scrubbed film inside the 3D neon frame.
+       Files: assets/video/hero-scrub.mp4, assets/img/hero-poster.jpg, assets/img/hero-ending.jpg -->
+  <header class="hero-scrub" id="heroScrub" aria-label="Myami Bachi, Kendall's hibachi truck">
+    <div class="stage" id="stage">
+      <div class="frame3d" id="frame3d">
+        <div class="poster" id="poster" aria-hidden="true"></div>
+        <video id="heroVideo" preload="none" muted playsinline aria-hidden="true" tabindex="-1"></video>
+        <div class="scrim" aria-hidden="true"></div>
+      </div>
 
-        <div class="pill" id="pill" aria-label="Featured dishes">
-          <button class="on" data-i="0" aria-label="Filet mignon and noodles"><img src="assets/img/steak-noodles.jpg" alt=""></button>
-          <button data-i="1" aria-label="Steak and shrimp combo"><img src="assets/img/combo-steak-shrimp.jpg" alt=""></button>
-          <button data-i="2" aria-label="Hibachi burrito"><img src="assets/img/hibachi-burrito.jpg" alt=""></button>
+      <div class="band band-1" data-a="0" data-b="0.24" data-fx="flicker">
+        <p class="kicker mono">Japanese teppanyaki &middot; Kendall, Miami</p>
+        <h1 class="split">Kendall's hibachi truck.</h1>
+        <p class="sub">Open nightly, 6 to 11:30.</p>
+      </div>
+      <div class="band band-2" data-a="0.28" data-b="0.54" data-fx="drift">
+        <h2 class="split">Follow the line.</h2>
+        <p class="sub">It's always a good sign.</p>
+      </div>
+      <div class="band band-3" data-a="0.58" data-b="0.80" data-fx="blur">
+        <h2 class="blur-pair"><span class="soft" aria-hidden="true">Straight off the flat-top.</span><span class="sharp">Straight off the flat-top.</span></h2>
+      </div>
+      <div class="band band-4" data-a="0.84" data-b="1" data-fx="rise">
+        <h2 class="split">Cooked when you order.</h2>
+        <p class="sub staged-sub">Filet mignon, shrimp, and the burrito everyone posts.</p>
+        <div class="cta-row staged-cta">
+          <a class="btn btn-hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener">Get directions</a>
+          <a class="btn btn-ghost" href="#menu">See the menu</a>
         </div>
       </div>
 
-      <div class="hero-meta">
-        <div>Now serving<strong id="dishName">Filet Mignon &amp; Noodles</strong></div>
-        <div>Open nightly<strong>6:00 PM to 11:30 PM</strong></div>
-        <div>Find us<strong>12750 SW 128th St</strong></div>
+      <svg class="ring" id="ring" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="3"/>
+        <circle class="ring-fill" cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/>
+      </svg>
+      <div class="scroll-cue mono" aria-hidden="true">Scroll</div>
+    </div>
+  </header>
+
+  <!-- Static hero: phones, tablets held upright, and reduced motion -->
+  <header class="hero-static" aria-label="Myami Bachi, Kendall's hibachi truck">
+    <div class="hero-static-bg" aria-hidden="true"></div>
+    <div class="hero-static-copy wrap">
+      <p class="kicker mono">Japanese teppanyaki &middot; Kendall, Miami</p>
+      <h1>Kendall's hibachi truck.</h1>
+      <p class="sub">Filet mignon, shrimp and the burrito everyone posts. Open nightly, 6 to 11:30.</p>
+      <div class="cta-row">
+        <a class="btn btn-hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn btn-ghost" href="#menu">See the menu</a>
       </div>
     </div>
   </header>
 
+  <main id="main" tabindex="-1">
   <section id="menu">
     <div class="wrap">
       <div class="section-head reveal">
@@ -206,9 +219,18 @@
         <h2>Cooked. Packed. Served.</h2>
       </div>
       <div class="steps">
-        <div class="step reveal"><h3>Cooked on the flat-top</h3><p>Filet mignon, shrimp and chicken hit the flat-top when you order, seared hot.</p></div>
-        <div class="step reveal"><h3>Packed to travel</h3><p>Fried rice or noodles and hibachi vegetables go in first, then the protein on top.</p></div>
-        <div class="step reveal"><h3>Served to you</h3><p>Handed over through the truck window, still steaming. Add yum yum sauce for $1.50.</p></div>
+        <figure class="step reveal">
+          <img src="assets/img/step-cooked.jpg" onerror="this.onerror=null;this.src='assets/img/steak-noodles.jpg'" alt="Filet mignon, shrimp and fried rice searing on the flat-top" loading="lazy">
+          <figcaption><h3>Cooked on the flat-top</h3><p>Filet mignon, shrimp and chicken hit the flat-top when you order, seared hot.</p></figcaption>
+        </figure>
+        <figure class="step reveal">
+          <img src="assets/img/step-packed.jpg" onerror="this.onerror=null;this.src='assets/img/combo-steak-shrimp.jpg'" alt="A takeout box of fried rice, noodles, filet mignon and shrimp with yum yum sauce" loading="lazy">
+          <figcaption><h3>Packed to travel</h3><p>Fried rice or noodles and hibachi vegetables go in first, then the protein on top.</p></figcaption>
+        </figure>
+        <figure class="step reveal">
+          <img src="assets/img/step-served.jpg" onerror="this.onerror=null;this.src='assets/img/hibachi-burrito.jpg'" alt="A hibachi burrito and a takeout box waiting on the truck's window ledge" loading="lazy">
+          <figcaption><h3>Served to you</h3><p>Handed over through the truck window, still steaming. Add yum yum sauce for $1.50.</p></figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -229,6 +251,22 @@
     </div>
   </section>
 
+  <section id="wait" class="wait">
+    <div class="wrap wait-grid">
+      <div class="wait-head reveal">
+        <span class="eyebrow">The line</span>
+        <h2>Yes, there's a line.</h2>
+        <p>Everything is cooked when you order, so busy nights take a while. Call ahead and we'll have it ready: <a class="addr" href="tel:+13055225141">(305) 522-5141</a>.</p>
+      </div>
+      <div class="faq reveal">
+        <details><summary>How long is the wait?</summary><p>On a quiet night, a few minutes. On a busy weekend it can be 30 to 40 minutes, so calling ahead helps.</p></details>
+        <details><summary>Where exactly is the truck?</summary><p>12750 SW 128th St in Kendall, in the shopping plaza lot with the other food trucks. Look for the purple truck with neon palm trees.</p></details>
+        <details><summary>Do you deliver?</summary><p>Not yet. Walk up to the window or call ahead for takeout.</p></details>
+        <details><summary>I have a food allergy.</summary><p>Tell us when you order. Our food may contain milk, eggs, soybean, peanuts, tree nuts, fish and shellfish.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section id="visit">
     <div class="wrap visit">
       <div class="visit-card reveal">
@@ -244,18 +282,24 @@
           <a href="reviews.html" class="btn btn-ghost">Reviews</a>
         </div>
       </div>
+      <svg class="skyline" id="skyline" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 110 H40 V70 H70 V50 H95 V80 H120 V30 H150 V90 H180 V60 H205 V40 H230 V85 H260 V55 H300 M300 110 C302 70 304 50 300 20 M300 32 C285 22 270 26 258 34 M300 32 C315 20 332 24 342 34 M300 26 C292 12 280 8 268 10 M300 26 C310 12 324 10 334 14 M300 110 H340 V65 H365 V45 H390 V90 H420 V35 H450 V75 H480 V50 H510 V95 H540 V60 H570 V80 H600" />
+      </svg>
       <img class="reveal truck-photo" src="assets/img/truck.jpg" alt="The Myami Bachi food truck, wrapped in purple with neon palm trees">
     </div>
   </section>
 
+  </main>
+
   <footer>
     <div class="wrap">
-      <span>&copy; <span id="year"></span> Myami Bachi. Miami, FL.</span>
+      <span>&copy; <span id="year"></span> Myami Bachi. 12750 SW 128th St, Miami, FL. Some imagery on this site is AI generated; the food photos are real.</span>
       <span><a href="reviews.html">Reviews</a> &middot; <a href="#menu">Menu</a></span>
     </div>
   </footer>
 
   <script src="js/reviews-data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/hero.js"></script>
 </body>
 </html>

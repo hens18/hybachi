@@ -1,4 +1,4 @@
-// Shared behavior: nav, reveal-on-scroll, 3D hero tilt + reel.
+// Shared behavior: nav, reveal-on-scroll, skyline draw, hidden-tab pause.
 (() => {
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 20);
@@ -17,56 +17,18 @@
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
-  // ---- Hero ----
-  const screen = document.getElementById("screen");
-  if (!screen) return;
+  // Skyline draws itself when it scrolls into view.
+  const sky = document.getElementById("skyline");
+  if (sky) {
+    const path = sky.querySelector("path");
+    const len = Math.ceil(path.getTotalLength());
+    sky.style.setProperty("--len", len);
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { sky.classList.add("drawn"); o.disconnect(); } }, { threshold: 0.4 }).observe(sky);
+  }
 
-  // Mouse-driven 3D tilt
-  const hero = document.querySelector(".hero");
-  hero.addEventListener("mousemove", (e) => {
-    const r = hero.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    screen.style.transform = `rotateY(${-14 + x * 22}deg) rotateX(${6 - y * 16}deg)`;
-  });
-  hero.addEventListener("mouseleave", () => { screen.style.transform = ""; });
+  // Pause every CSS loop while the tab is hidden.
+  document.addEventListener("visibilitychange", () => document.body.classList.toggle("paused", document.hidden));
 
-  // Video takes over when assets/video/hero-loop.mp4 exists; otherwise the image reel loops.
-  const video = document.getElementById("heroVideo");
-  const reel = document.getElementById("reel");
-  const steps = document.getElementById("reelSteps");
-  const pill = document.getElementById("pill");
-  const dishName = document.getElementById("dishName");
-  const frames = [...reel.querySelectorAll("img")];
-  const stepEls = [...steps.children];
-  const pillBtns = [...pill.querySelectorAll("button")];
-  const names = ["Filet Mignon &amp; Noodles", "Filet Mignon &amp; Shrimp", "Hibachi Burrito"];
-  let i = 0, timer;
-
-  const show = (n) => {
-    i = n % frames.length;
-    frames.forEach((f, k) => f.classList.toggle("on", k === i));
-    stepEls.forEach((s, k) => s.classList.toggle("on", k === i));
-    pillBtns.forEach((b, k) => b.classList.toggle("on", k === i));
-    dishName.innerHTML = names[i];
-  };
-  const start = () => { clearInterval(timer); timer = setInterval(() => show(i + 1), 3200); };
-
-  pillBtns.forEach((b) => b.addEventListener("click", () => { show(+b.dataset.i); start(); }));
-  start();
-
-  video.addEventListener("loadeddata", () => {
-    video.hidden = false;
-    reel.hidden = true;
-    clearInterval(timer);
-    // Advance the Cooked / Packed / Served labels in step with the video.
-    video.addEventListener("timeupdate", () => {
-      if (!video.duration) return;
-      const k = Math.min(2, Math.floor((video.currentTime / video.duration) * 3));
-      stepEls.forEach((s, j) => s.classList.toggle("on", j === k));
-    });
-  });
-  video.load();
 })();
 
 // ---- Reviews carousel: drifts left to right; the card nearest the center is spotlighted ----
