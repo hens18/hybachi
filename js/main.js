@@ -58,31 +58,66 @@
   const copies = Math.max(1, Math.ceil((window.innerWidth * 1.5) / (REVIEWS.length * 340)));
   track.innerHTML = set.repeat(copies * 2);
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const cards = [...track.children];
+  cards.forEach((c) => {
+    c.tabIndex = 0;
+    c.setAttribute("role", "button");
+    c.setAttribute("aria-pressed", "false");
+  });
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let x = 0;
+
+  // ---- Click a review to stop on it and highlight it; click it again (or anywhere else, or Esc) to resume ----
+  let selected = null;
+  let targetX = null; // where the track eases to so the chosen card sits in the middle
+  const select = (card) => {
+    if (selected) { selected.classList.remove("selected"); selected.setAttribute("aria-pressed", "false"); }
+    selected = card;
+    marquee.classList.toggle("has-selection", !!card);
+    if (!card) { targetX = null; return; }
+    card.classList.add("selected");
+    card.setAttribute("aria-pressed", "true");
+    if (!reduced) {
+      const r = card.getBoundingClientRect();
+      targetX = x - (r.left + r.width / 2 - window.innerWidth / 2);
+    }
+  };
+
+  track.addEventListener("click", (e) => {
+    // "Read more" opens the full review list below the carousel.
+    const more = e.target.closest('a[href="#allReviews"]');
+    if (more) {
+      e.preventDefault();
+      const all = document.getElementById("allReviews");
+      all.open = true;
+      all.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (e.target.closest("a")) return; // other links (Yelp) just open
+    const card = e.target.closest(".mq-card");
+    if (card) select(card === selected ? null : card);
+  });
+  track.addEventListener("keydown", (e) => {
+    const card = e.target.closest(".mq-card");
+    if (card && e.target === card && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      select(card === selected ? null : card);
+    }
+  });
+  document.addEventListener("click", (e) => { if (selected && !e.target.closest(".mq-card")) select(null); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && selected) select(null); });
+
+  if (reduced) {
     marquee.classList.add("static");
     return;
   }
 
-  // "Read more" opens the full review list below the carousel.
-  track.addEventListener("click", (e) => {
-    const a = e.target.closest('a[href="#allReviews"]');
-    if (!a) return;
-    e.preventDefault();
-    const all = document.getElementById("allReviews");
-    all.open = true;
-    all.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-
-  const cards = [...track.children];
   const SPEED = 40; // px per second
   const period = () => cards[cards.length / 2].offsetLeft - cards[0].offsetLeft;
   let half = period();
-  let x = 0, last = performance.now(), paused = false, visible = true;
+  let last = performance.now(), visible = true;
 
-  marquee.addEventListener("mouseenter", () => (paused = true));
-  marquee.addEventListener("mouseleave", () => (paused = false));
-  marquee.addEventListener("focusin", () => (paused = true));
-  marquee.addEventListener("focusout", () => (paused = false));
   new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(marquee);
   window.addEventListener("resize", () => (half = period()));
 
@@ -91,15 +126,23 @@
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
     if (visible) {
-      if (!paused) x = (x + SPEED * dt) % half;
-      // Moving right: start shifted left by one full set, drift toward 0.
-      track.style.transform = `translate3d(${x - half}px,0,0)`;
-      const mid = window.innerWidth / 2;
-      let best = null, bestD = Infinity;
-      for (const c of cards) {
-        const r = c.getBoundingClientRect();
-        const d = Math.abs(r.left + r.width / 2 - mid);
-        if (d < bestD) { bestD = d; best = c; }
+      if (targetX !== null) {
+        x += (targetX - x) * (1 - Math.pow(0.002, dt)); // ease the chosen card to the middle
+      } else {
+        x += SPEED * dt; // keeps drifting left to right unless a review is chosen
+      }
+      // Moving right: start shifted left by one full set; the duplicate set hides the wrap.
+      const shown = ((x % half) + half) % half;
+      track.style.transform = `translate3d(${shown - half}px,0,0)`;
+      let best = selected;
+      if (!best) {
+        const mid = window.innerWidth / 2;
+        let bestD = Infinity;
+        for (const c of cards) {
+          const r = c.getBoundingClientRect();
+          const d = Math.abs(r.left + r.width / 2 - mid);
+          if (d < bestD) { bestD = d; best = c; }
+        }
       }
       if (best !== spot) { spot?.classList.remove("spot"); best.classList.add("spot"); spot = best; }
     }

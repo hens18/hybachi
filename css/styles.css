@@ -186,6 +186,13 @@ section { padding: 100px 0; }
   opacity: 1; transform: scale(1.04); border-color: rgba(255,45,149,.6);
   box-shadow: 0 20px 60px rgba(255,45,149,.25), 0 0 0 1px rgba(255,45,149,.3);
 }
+.mq-card { cursor: pointer; }
+.mq-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.mq-card.selected {
+  opacity: 1; transform: scale(1.07); border-color: var(--cyan);
+  box-shadow: 0 24px 70px rgba(62,230,255,.22), 0 0 0 1px rgba(62,230,255,.45);
+}
+.marquee.has-selection .mq-card:not(.selected) { opacity: .4; }
 .mq-top { display: flex; align-items: center; gap: 12px; }
 .mq-top h3 { font-size: 1rem; }
 .mq-top span, .mq-meta span:last-child { font-size: .8rem; color: var(--muted); }
