@@ -40,7 +40,7 @@
   const frames = [...reel.querySelectorAll("img")];
   const stepEls = [...steps.children];
   const pillBtns = [...pill.querySelectorAll("button")];
-  const names = ["Steak &amp; Yakisoba", "Steak &amp; Shrimp Combo", "Hibachi Burrito"];
+  const names = ["Filet Mignon &amp; Noodles", "Filet Mignon &amp; Shrimp", "Hibachi Burrito"];
   let i = 0, timer;
 
   const show = (n) => {
