@@ -6,10 +6,10 @@ Plain HTML, CSS and JavaScript. No build step: open `index.html` or serve the fo
 ## Layout
 
 ```
-index.html              the whole site (hero, menu, how it's made, reviews, social, FAQ, find the truck)
+index.html              the whole site (video hero, menu, how it's made, reviews, social, find the truck, the line FAQ)
 css/styles.css          all styles
 js/
-  hero.js               scroll-scrubbed hero video in the 3D neon frame
+  hero.js               background hero video (pauses off screen, respects reduced motion)
   main.js               nav, reveals, reviews carousel, social section
   reviews.js            full review list, rating summary and filters
   reviews-data.js       EDIT HERE to add or change reviews
@@ -17,7 +17,7 @@ js/
 assets/                 everything the page loads
   img/                  food, truck, logo, hero poster, step photos
   img/reviews/          photos from customer reviews
-  video/hero-scrub.mp4  hero video, encoded for scroll scrubbing
+  video/hero-loop.mp4   hero background video, looping
 source/                 originals, NOT loaded by the page and NOT published
   higgsfield/           raw AI generations (hero video, start frame, step photos, ending frame)
   photos/               reference photos (menu board)
@@ -32,9 +32,9 @@ Live at https://hens18.github.io/hybachi/ once Settings > Pages > Source is set 
 ## Re-making the web files from `source/`
 
 ```
-# hero video (keyframe every 8 frames so scrolling seeks cleanly)
-ffmpeg -i source/higgsfield/hero-video-raw.mp4 -c:v libx264 -crf 23 -preset slow -g 8 -keyint_min 8 \
-  -pix_fmt yuv420p -movflags +faststart -an assets/video/hero-scrub.mp4
+# hero background video
+ffmpeg -i source/higgsfield/hero-video-raw.mp4 -vf scale=1920:-2 -c:v libx264 -crf 24 -preset slow -g 48 \
+  -pix_fmt yuv420p -movflags +faststart -an assets/video/hero-loop.mp4
 
 # hero poster (must match the video's first frame)
 ffmpeg -i source/higgsfield/hero-start-frame.png -vf scale=1920:-2 -q:v 2 assets/img/hero-poster.jpg

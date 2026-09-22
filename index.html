@@ -36,49 +36,14 @@
 
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- HERO: scroll-scrubbed film inside the 3D neon frame.
-       Files: assets/video/hero-scrub.mp4 and assets/img/hero-poster.jpg (see README.md) -->
-  <header class="hero-scrub" id="heroScrub" aria-label="Myami Bachi, Kendall's hibachi truck">
-    <div class="stage" id="stage">
-      <div class="frame3d" id="frame3d">
-        <div class="poster" id="poster" aria-hidden="true"></div>
-        <video id="heroVideo" preload="none" muted playsinline aria-hidden="true" tabindex="-1"></video>
-        <div class="scrim" aria-hidden="true"></div>
-      </div>
-
-      <div class="band band-1" data-a="0" data-b="0.24" data-fx="flicker">
-        <p class="kicker mono">Japanese teppanyaki &middot; Kendall, Miami</p>
-        <h1 class="split">Kendall's hibachi truck.</h1>
-        <p class="sub">Open nightly, 6 to 11:30.</p>
-      </div>
-      <div class="band band-2" data-a="0.28" data-b="0.54" data-fx="drift">
-        <h2 class="split">Follow the line.</h2>
-        <p class="sub">It's always a good sign.</p>
-      </div>
-      <div class="band band-3" data-a="0.58" data-b="0.80" data-fx="blur">
-        <h2 class="blur-pair"><span class="soft" aria-hidden="true">Straight off the flat-top.</span><span class="sharp">Straight off the flat-top.</span></h2>
-      </div>
-      <div class="band band-4" data-a="0.84" data-b="1" data-fx="rise">
-        <h2 class="split">Cooked when you order.</h2>
-        <p class="sub staged-sub">Filet mignon, shrimp, and the burrito everyone posts.</p>
-        <div class="cta-row staged-cta">
-          <a class="btn btn-hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener">Get directions</a>
-          <a class="btn btn-ghost" href="#menu">See the menu</a>
-        </div>
-      </div>
-
-      <svg class="ring" id="ring" viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="3"/>
-        <circle class="ring-fill" cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/>
-      </svg>
-      <div class="scroll-cue mono" aria-hidden="true">Scroll</div>
-    </div>
-  </header>
-
-  <!-- Static hero: phones, tablets held upright, and reduced motion -->
-  <header class="hero-static" aria-label="Myami Bachi, Kendall's hibachi truck">
-    <div class="hero-static-bg" aria-hidden="true"></div>
-    <div class="hero-static-copy wrap">
+  <!-- HERO: the Higgsfield film loops behind the headline (assets/video/hero-loop.mp4). -->
+  <header class="hero-video" id="top" aria-label="Myami Bachi, Kendall's hibachi truck">
+    <video class="hero-bg" id="heroVideo" autoplay muted loop playsinline preload="auto"
+           poster="assets/img/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="assets/video/hero-loop.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-copy wrap">
       <p class="kicker mono">Japanese teppanyaki &middot; Kendall, Miami</p>
       <h1>Kendall's hibachi truck.</h1>
       <p class="sub">Filet mignon, shrimp and the burrito everyone posts. Open nightly, 6 to 11:30.</p>
@@ -87,6 +52,7 @@
         <a class="btn btn-ghost" href="#menu">See the menu</a>
       </div>
     </div>
+    <a class="scroll-cue mono" href="#menu" aria-label="Scroll to the menu">Scroll</a>
   </header>
 
   <main id="main" tabindex="-1">
@@ -284,22 +250,6 @@
     </div>
   </section>
 
-  <section id="wait" class="wait">
-    <div class="wrap wait-grid">
-      <div class="wait-head reveal">
-        <span class="eyebrow">The line</span>
-        <h2>Yes, there's a line.</h2>
-        <p>Everything is cooked when you order, so busy nights take a while. Call ahead and we'll have it ready: <a class="addr" href="tel:+13055225141">(305) 522-5141</a>.</p>
-      </div>
-      <div class="faq reveal">
-        <details><summary>How long is the wait?</summary><p>On a quiet night, a few minutes. On a busy weekend it can be 30 to 40 minutes, so calling ahead helps.</p></details>
-        <details><summary>Where exactly is the truck?</summary><p>12750 SW 128th St in Kendall, in the shopping plaza lot with the other food trucks. Look for the purple truck with neon palm trees.</p></details>
-        <details><summary>Do you deliver?</summary><p>Not yet. Walk up to the window or call ahead for takeout.</p></details>
-        <details><summary>I have a food allergy.</summary><p>Tell us when you order. Our food may contain milk, eggs, soybean, peanuts, tree nuts, fish and shellfish.</p></details>
-      </div>
-    </div>
-  </section>
-
   <section id="visit">
     <div class="wrap visit">
       <div class="visit-card reveal">
@@ -319,6 +269,22 @@
         <path d="M0 110 H40 V70 H70 V50 H95 V80 H120 V30 H150 V90 H180 V60 H205 V40 H230 V85 H260 V55 H300 M300 110 C302 70 304 50 300 20 M300 32 C285 22 270 26 258 34 M300 32 C315 20 332 24 342 34 M300 26 C292 12 280 8 268 10 M300 26 C310 12 324 10 334 14 M300 110 H340 V65 H365 V45 H390 V90 H420 V35 H450 V75 H480 V50 H510 V95 H540 V60 H570 V80 H600" />
       </svg>
       <img class="reveal truck-photo" src="assets/img/truck.jpg" alt="The Myami Bachi food truck, wrapped in purple with neon palm trees">
+    </div>
+  </section>
+
+  <section id="wait" class="wait">
+    <div class="wrap wait-grid">
+      <div class="wait-head reveal">
+        <span class="eyebrow">The line</span>
+        <h2>Yes, there's a line.</h2>
+        <p>Everything is cooked when you order, so busy nights take a while. Call ahead and we'll have it ready: <a class="addr" href="tel:+13055225141">(305) 522-5141</a>.</p>
+      </div>
+      <div class="faq reveal">
+        <details><summary>How long is the wait?</summary><p>On a quiet night, a few minutes. On a busy weekend it can be 30 to 40 minutes, so calling ahead helps.</p></details>
+        <details><summary>Where exactly is the truck?</summary><p>12750 SW 128th St in Kendall, in the shopping plaza lot with the other food trucks. Look for the purple truck with neon palm trees.</p></details>
+        <details><summary>Do you deliver?</summary><p>Not yet. Walk up to the window or call ahead for takeout.</p></details>
+        <details><summary>I have a food allergy.</summary><p>Tell us when you order. Our food may contain milk, eggs, soybean, peanuts, tree nuts, fish and shellfish.</p></details>
+      </div>
     </div>
   </section>
 
