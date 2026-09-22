@@ -264,6 +264,25 @@ section { padding: 100px 0; }
 .muted-note { color: var(--muted); font-style: italic; }
 .muted-note a { color: var(--pink); font-style: normal; font-weight: 600; }
 
+/* As seen on TikTok & Instagram */
+.seen-on .amp { font-family: var(--script); color: var(--pink); font-size: .8em; padding: 0 .15em; }
+.social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 900px; margin-inline: auto; }
+.social-card { display: flex; flex-direction: column; gap: 20px; padding: 28px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); transition: border-color .4s var(--ease-out), transform .4s var(--ease-out); }
+.social-card:hover { border-color: rgba(255,45,149,.5); transform: translateY(-4px); }
+.social-card header { display: flex; align-items: center; gap: 14px; }
+.social-card h3 { font-family: var(--display); font-weight: 400; font-size: 1.4rem; line-height: 1.1; }
+.social-card .mono { color: var(--cyan); }
+.social-icon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; color: #fff; }
+.social-icon svg { width: 26px; height: 26px; }
+.tiktok .social-icon { background: linear-gradient(135deg, var(--cyan), var(--pink)); }
+.instagram .social-icon { background: linear-gradient(135deg, var(--flame), var(--pink)); }
+.social-posts { list-style: none; display: grid; gap: 10px; }
+.social-post { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid var(--line); transition: border-color .3s var(--ease-out), background .3s var(--ease-out); }
+.social-post:hover { border-color: var(--cyan); background: rgba(62,230,255,.06); }
+.social-post b { color: var(--pink); }
+.social-card .btn { align-self: flex-start; margin-top: auto; }
+.foot-links a { text-decoration: underline; text-underline-offset: 3px; }
+
 /* The line: FAQ */
 .wait { background: var(--night-2); }
 .wait-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }

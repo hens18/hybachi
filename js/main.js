@@ -97,3 +97,35 @@
   };
   requestAnimationFrame(tick);
 })();
+
+// ---- As seen on TikTok and Instagram: built from js/social-data.js ----
+(() => {
+  const section = document.getElementById("seen-on");
+  if (!section || typeof SOCIAL === "undefined") return;
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const icons = {
+    tiktok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46V8.1A6.5 6.5 0 1 0 17 14.5V9.3a7 7 0 0 0 4 1.2v-3A4 4 0 0 1 17 3.5V3h-3z" fill="currentColor"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>',
+  };
+  const names = { tiktok: "TikTok", instagram: "Instagram" };
+  const live = Object.entries(SOCIAL).filter(([, v]) => v.profile || v.posts?.length);
+  if (!live.length) return;
+
+  const link = (url, inner, cls) => `<a class="${cls}" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
+  document.getElementById("socialGrid").innerHTML = live.map(([key, v]) => `
+    <article class="social-card ${key} reveal">
+      <header>
+        <span class="social-icon">${icons[key] || ""}</span>
+        <div><h3>${names[key] || key}</h3><span class="mono">${esc(v.handle || "")}</span></div>
+      </header>
+      ${v.posts?.length ? `<ul class="social-posts">${v.posts.map((p) => `<li>${link(p.url, `<span>${esc(p.label || "Watch the post")}</span><b>&rarr;</b>`, "social-post")}</li>`).join("")}</ul>` : ""}
+      ${v.profile ? link(v.profile, `Follow ${esc(v.handle || "us")} on ${names[key] || key}`, "btn btn-ghost") : ""}
+    </article>`).join("");
+  // The heading names only the platforms that have links.
+  section.querySelector("h2").innerHTML = live.map(([key]) => names[key] || key).join(' <span class="amp">&amp;</span> ');
+  section.hidden = false;
+  section.querySelectorAll(".reveal").forEach((el) => new IntersectionObserver(([e], o) => { if (e.isIntersecting) { el.classList.add("in"); o.disconnect(); } }, { threshold: 0.15 }).observe(el));
+
+  const foot = document.getElementById("footSocial");
+  if (foot) foot.innerHTML = live.filter(([, v]) => v.profile).map(([key, v]) => ` &middot; ${link(v.profile, names[key] || key, "")}`).join("");
+})();
