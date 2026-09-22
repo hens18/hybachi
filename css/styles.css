@@ -123,7 +123,6 @@ section { padding: 100px 0; }
   background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
   transition: transform .3s, border-color .3s;
 }
-.dish:hover { transform: translateY(-6px); border-color: rgba(255,45,149,.5); }
 .dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .dish { display: flex; flex-direction: column; }
 .dish-body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; }
@@ -250,6 +249,27 @@ section { padding: 100px 0; }
 .skyline { position: absolute; left: 0; right: 0; bottom: -40px; width: 100%; height: 90px; pointer-events: none; opacity: .5; }
 .skyline path { fill: none; stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: var(--len, 2000); stroke-dashoffset: var(--len, 2000); transition: stroke-dashoffset 3.2s var(--ease-out); }
 .skyline.drawn path { stroke-dashoffset: 0; }
+
+/* Food pop: every showcased dish lifts, glows and zooms on hover */
+.media { overflow: hidden; }
+.media img { transition: transform .6s var(--ease-out), filter .6s var(--ease-out); }
+.menu-grid .dish, .steps .step {
+  transition: opacity .8s, transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color .45s var(--ease-out);
+}
+.review-photos { overflow: visible; }
+.review-photos img, .mq-card img { transition: transform .5s var(--ease-out), filter .5s var(--ease-out), box-shadow .5s var(--ease-out); }
+@media (hover: hover) {
+  .menu-grid .dish:hover, .steps .step:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(255,45,149,.6);
+    box-shadow: 0 26px 60px -18px rgba(255,45,149,.45), 0 0 0 1px rgba(255,45,149,.35), 0 0 40px rgba(255,122,26,.18);
+  }
+  .menu-grid .dish:hover .media img, .steps .step:hover .media img { transform: scale(1.08); filter: saturate(1.2) brightness(1.06); }
+  .dish:hover h3, .step:hover h3 { color: #fff; text-shadow: 0 0 18px rgba(255,45,149,.55); }
+  .dish:hover .tag { color: var(--pink); }
+  .review-photos img:hover { transform: scale(1.06); filter: saturate(1.2) brightness(1.06); box-shadow: 0 14px 34px -10px rgba(255,45,149,.5); position: relative; z-index: 1; }
+  .mq-card:hover img { transform: scale(1.04); filter: saturate(1.2) brightness(1.06); }
+}
 
 footer { padding: 40px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
 footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
