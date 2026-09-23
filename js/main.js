@@ -1,4 +1,4 @@
-// Shared behavior: nav, reveal-on-scroll, skyline draw, hidden-tab pause.
+// Shared behavior: nav, footer year, hidden-tab pause.
 (() => {
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 20);
@@ -9,22 +9,8 @@
   const links = document.querySelector(".nav-links");
   if (toggle) toggle.addEventListener("click", () => links.classList.toggle("open"));
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
-
-  // Skyline draws itself when it scrolls into view.
-  const sky = document.getElementById("skyline");
-  if (sky) {
-    const path = sky.querySelector("path");
-    const len = Math.ceil(path.getTotalLength());
-    sky.style.setProperty("--len", len);
-    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { sky.classList.add("drawn"); o.disconnect(); } }, { threshold: 0.4 }).observe(sky);
-  }
 
   // Pause every CSS loop while the tab is hidden.
   document.addEventListener("visibilitychange", () => document.body.classList.toggle("paused", document.hidden));
@@ -167,10 +153,10 @@
 
   const link = (url, inner, cls) => `<a class="${cls}" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
   document.getElementById("socialGrid").innerHTML = live.map(([key, v]) => `
-    <article class="social-card ${key} reveal">
+    <article class="social-card ${key}">
       <header>
         <span class="social-icon">${icons[key] || ""}</span>
-        <div><h3>${names[key] || key}</h3><span class="mono">${esc(v.handle || "")}</span></div>
+        <div><h3>${names[key] || key}</h3><span class="handle">${esc(v.handle || "")}</span></div>
       </header>
       ${v.posts?.length ? `<ul class="social-posts">${v.posts.map((p) => `<li>${link(p.url, `<span>${esc(p.label || "Watch the post")}</span><b>&rarr;</b>`, "social-post")}</li>`).join("")}</ul>` : ""}
       ${v.profile ? link(v.profile, `Follow ${esc(v.handle || "us")} on ${names[key] || key}`, "btn btn-ghost") : ""}
@@ -240,9 +226,8 @@
   }
 
   // The heading names only the platforms that have links.
-  if (live.length) section.querySelector("h2").innerHTML = live.map(([key]) => names[key] || key).join(' <span class="amp">&amp;</span> ');
+  if (live.length) section.querySelector("h2").innerHTML = "As seen on " + live.map(([key]) => names[key] || key).join(' <span class="amp">&amp;</span> ');
   section.hidden = false;
-  section.querySelectorAll(".reveal").forEach((el) => new IntersectionObserver(([e], o) => { if (e.isIntersecting) { el.classList.add("in"); o.disconnect(); } }, { threshold: 0.15 }).observe(el));
 
   const foot = document.getElementById("footSocial");
   if (foot) foot.innerHTML = live.filter(([, v]) => v.profile).map(([key, v]) => ` &middot; ${link(v.profile, names[key] || key, "")}`).join("");
