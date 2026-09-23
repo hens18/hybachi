@@ -14,6 +14,7 @@ js/
   hero.js               background hero video (pauses off screen, respects reduced motion)
   main.js               nav, reveals, reviews carousel, social section
   reviews.js            full review list, rating summary and filters
+  visit.js              open-now status, closest truck, phone action bar, menu jump buttons
   reviews-data.js       EDIT HERE to add or change reviews
   social-data.js        EDIT HERE to add TikTok / Instagram links and on-page clips
 assets/                 everything the page loads

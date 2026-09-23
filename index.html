@@ -61,7 +61,7 @@
         </li>
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.4 3.3 3.3-1.4 1.4-3.9-3.9V6h2z" fill="currentColor"/></svg>
-          <span>Open nightly, 6 PM to midnight</span>
+          <span class="open-status" data-open-status>Open nightly, 6 PM to midnight</span>
         </li>
         <li class="social-pill">
           <a href="https://www.tiktok.com/@myamibachi" target="_blank" rel="noopener" aria-label="Myami Bachi on TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46V8.1A6.5 6.5 0 1 0 17 14.5V9.3a7 7 0 0 0 4 1.2v-3A4 4 0 0 1 17 3.5V3h-3z" fill="currentColor"/></svg></a>
@@ -127,8 +127,17 @@
         </article>
       </div>
 
+      <nav class="menu-jump" aria-label="Jump to a part of the menu">
+        <a href="#menu-starters">Starters</a>
+        <a href="#menu-entrees">Entrees</a>
+        <a href="#menu-combos">Combos</a>
+        <a href="#menu-burritos">Burritos</a>
+        <a href="#menu-keto">Keto bowls</a>
+        <a href="#menu-sides">Sides</a>
+        <a href="#menu-drinks">Drinks</a>
+      </nav>
       <div class="menu-full">
-        <div class="menu-col">
+        <div class="menu-col" id="menu-starters">
           <h3>Starters</h3>
           <ul>
             <li><span>Fried Pork Gyoza</span><b>$6.00</b></li>
@@ -140,7 +149,7 @@
             <li><span>Orange Lemon Pepper Wings</span><b>$12.50</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-entrees">
           <h3>Entrees <small>with hibachi vegetables</small></h3>
           <ul>
             <li><span>Filet Mignon &amp; Fried Rice</span><b>$22.00</b></li>
@@ -151,7 +160,7 @@
             <li><span>Shrimp &amp; Noodles</span><b>$24.00</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-combos">
           <h3>Combos <small>with hibachi vegetables</small></h3>
           <ul>
             <li><span>Filet Mignon &amp; Chicken, Fried Rice</span><b>$29.00</b></li>
@@ -163,7 +172,7 @@
             <li><span>The Miami Vice <small>chicken, steak &amp; shrimp, fried rice, topped with udon</small></span><b>$46.00</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-burritos">
           <h3>Hibachi Burrito</h3>
           <ul>
             <li><span>Chicken</span><b>$16.00</b></li>
@@ -174,7 +183,7 @@
             <li><span>Steak &amp; Shrimp</span><b>$25.00</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-keto">
           <h3>Keto Bowls <small>with sautéed vegetables</small></h3>
           <ul>
             <li><span>Steak</span><b>$18.00</b></li>
@@ -182,7 +191,7 @@
             <li><span>Chicken</span><b>$14.00</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-sides">
           <h3>Sides</h3>
           <ul>
             <li><span>Chicken</span><b>$8.00</b></li>
@@ -194,7 +203,7 @@
             <li><span>Yum Yum, Garlic Butter, Spicy Mayo, Ponzu, Sweet Chili or Eel Sauce</span><b>$1.50</b></li>
           </ul>
         </div>
-        <div class="menu-col">
+        <div class="menu-col" id="menu-drinks">
           <h3>Drinks</h3>
           <ul>
             <li><span>Water</span><b>$2.00</b></li>
@@ -281,20 +290,27 @@
     <div class="wrap visit">
       <div class="visit-card">
         <h2>Find the truck</h2>
+        <div class="nearest">
+          <button class="btn btn-ghost" type="button" id="nearestBtn" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 3h-2.07A7 7 0 0 0 13 5.07V3h-2v2.07A7 7 0 0 0 5.07 11H3v2h2.07A7 7 0 0 0 11 18.93V21h2v-2.07A7 7 0 0 0 18.93 13H21v-2zm-9 6a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" fill="currentColor"/></svg>
+            Which truck is closer?
+          </button>
+          <p class="nearest-msg" id="nearestMsg" role="status" aria-live="polite"></p>
+        </div>
         <div class="locations">
-          <div class="location">
+          <div class="location" data-loc="kendall" data-lat="25.6524" data-lng="-80.4052">
             <span class="loc-name label">Kendall</span>
             <a class="addr" href="https://www.google.com/maps/search/?api=1&amp;query=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener">12750 SW 128th St, Miami, FL 33186</a>
             <a class="btn btn-hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener">Directions to Kendall</a>
           </div>
-          <div class="location">
+          <div class="location" data-loc="wynwood" data-lat="25.7950" data-lng="-80.1930">
             <span class="loc-name label">Wynwood</span>
             <a class="addr" href="https://www.google.com/maps/search/?api=1&amp;query=1900+NE+Miami+Ct+Miami+FL" target="_blank" rel="noopener">1900 NE Miami Ct, Miami, FL</a>
             <a class="btn btn-hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=1900+NE+Miami+Ct+Miami+FL" target="_blank" rel="noopener">Directions to Wynwood</a>
           </div>
         </div>
         <dl>
-          <div><dt>Hours</dt><dd>Both trucks, nightly, 6 PM to midnight</dd></div>
+          <div><dt>Hours</dt><dd>Both trucks, nightly, 6 PM to midnight <span class="open-badge" data-open-badge hidden></span></dd></div>
           <div><dt>Call</dt><dd><a class="addr" href="tel:+13055225141">(305) 522-5141</a></dd></div>
           <div><dt>Order</dt><dd>Walk up to the window, or order takeout</dd></div>
         </dl>
@@ -323,6 +339,12 @@
 
   </main>
 
+  <nav class="action-bar" id="actionBar" aria-label="Quick actions">
+    <a href="tel:+13055225141"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg>Call</a>
+    <a href="https://www.google.com/maps/dir/?api=1&amp;destination=12750+SW+128th+St+Miami+FL+33186" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Kendall</a>
+    <a href="https://www.google.com/maps/dir/?api=1&amp;destination=1900+NE+Miami+Ct+Miami+FL" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Wynwood</a>
+  </nav>
+
   <footer>
     <div class="wrap">
       <span>&copy; <span id="year"></span> Myami Bachi. Kendall: 12750 SW 128th St. Wynwood: 1900 NE Miami Ct. Miami, FL. Some imagery on this site is AI generated; the food photos are real.</span>
@@ -335,5 +357,6 @@
   <script src="js/reviews.js"></script>
   <script src="js/main.js"></script>
   <script src="js/hero.js"></script>
+  <script src="js/visit.js"></script>
 </body>
 </html>
