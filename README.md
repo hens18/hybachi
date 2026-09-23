@@ -13,14 +13,16 @@ js/
   main.js               nav, reveals, reviews carousel, social section
   reviews.js            full review list, rating summary and filters
   reviews-data.js       EDIT HERE to add or change reviews
-  social-data.js        EDIT HERE to add TikTok / Instagram links
+  social-data.js        EDIT HERE to add TikTok / Instagram links and on-page clips
 assets/                 everything the page loads
   img/                  food, truck, logo, hero poster, step photos
   img/reviews/          photos from customer reviews
   video/hero-loop.mp4   hero background video, looping
+  video/social/         TikTok clips played in the "As seen on" section (posters in img/social/)
 source/                 originals, NOT loaded by the page and NOT published
   higgsfield/           raw AI generations (hero video, start frame, step photos, ending frame)
   photos/               reference photos (menu board)
+  social/               original TikTok downloads
 ```
 
 ## Hosting

@@ -161,8 +161,9 @@
     instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>',
   };
   const names = { tiktok: "TikTok", instagram: "Instagram" };
-  const live = Object.entries(SOCIAL).filter(([, v]) => v.profile || v.posts?.length);
-  if (!live.length) return;
+  const clips = SOCIAL.clips || [];
+  const live = Object.entries(SOCIAL).filter(([k, v]) => k !== "clips" && (v.profile || v.posts?.length));
+  if (!live.length && !clips.length) return;
 
   const link = (url, inner, cls) => `<a class="${cls}" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
   document.getElementById("socialGrid").innerHTML = live.map(([key, v]) => `
@@ -174,8 +175,54 @@
       ${v.posts?.length ? `<ul class="social-posts">${v.posts.map((p) => `<li>${link(p.url, `<span>${esc(p.label || "Watch the post")}</span><b>&rarr;</b>`, "social-post")}</li>`).join("")}</ul>` : ""}
       ${v.profile ? link(v.profile, `Follow ${esc(v.handle || "us")} on ${names[key] || key}`, "btn btn-ghost") : ""}
     </article>`).join("");
+  // Clips play right on the page: silent and looping while on screen; tap one for sound.
+  const clipBox = document.getElementById("socialClips");
+  if (clipBox && clips.length) {
+    const speaker = '<svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z" fill="currentColor"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z" fill="currentColor"/></svg>';
+    clipBox.innerHTML = clips.map((c) => `
+      <figure class="clip reveal">
+        <div class="phone">
+          <video src="${esc(c.src)}" poster="${esc(c.poster)}" muted loop playsinline preload="none" aria-label="${esc(c.title)}"></video>
+          <button class="sound" type="button" aria-label="Turn sound on for ${esc(c.title)}" aria-pressed="false">${speaker}</button>
+        </div>
+        <figcaption>
+          <b>${esc(c.title)}</b>
+          ${c.credit ? (c.creditUrl ? link(c.creditUrl, esc(c.credit), "credit") : `<span class="credit">${esc(c.credit)}</span>`) : ""}
+        </figcaption>
+      </figure>`).join("");
+    clipBox.hidden = false;
+
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const figs = [...clipBox.querySelectorAll(".clip")];
+    const setSound = (fig, on) => {
+      const v = fig.querySelector("video"), b = fig.querySelector(".sound");
+      v.muted = !on;
+      fig.classList.toggle("sound-on", on);
+      b.setAttribute("aria-pressed", String(on));
+      b.setAttribute("aria-label", `${on ? "Turn sound off" : "Turn sound on"} for ${v.getAttribute("aria-label")}`);
+    };
+    const play = (v) => { const p = v.play(); if (p) p.catch(() => {}); };
+    figs.forEach((fig) => {
+      const v = fig.querySelector("video");
+      // Tap anywhere on the phone: sound on for this clip (others go quiet), tap again for silent.
+      fig.querySelector(".phone").addEventListener("click", () => {
+        const on = !fig.classList.contains("sound-on");
+        figs.forEach((f) => f !== fig && setSound(f, false));
+        setSound(fig, on);
+        if (on) play(v);
+      });
+      if (!reduced) {
+        new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) play(v);
+          else { v.pause(); if (fig.classList.contains("sound-on")) setSound(fig, false); }
+        }, { threshold: 0.5 }).observe(v);
+      }
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) figs.forEach((f) => f.querySelector("video").pause()); });
+  }
+
   // The heading names only the platforms that have links.
-  section.querySelector("h2").innerHTML = live.map(([key]) => names[key] || key).join(' <span class="amp">&amp;</span> ');
+  if (live.length) section.querySelector("h2").innerHTML = live.map(([key]) => names[key] || key).join(' <span class="amp">&amp;</span> ');
   section.hidden = false;
   section.querySelectorAll(".reveal").forEach((el) => new IntersectionObserver(([e], o) => { if (e.isIntersecting) { el.classList.add("in"); o.disconnect(); } }, { threshold: 0.15 }).observe(el));
 

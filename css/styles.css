@@ -245,6 +245,35 @@ section { padding: 100px 0; }
 .social-post:hover { border-color: var(--cyan); background: rgba(62,230,255,.06); }
 .social-post b { color: var(--pink); }
 .social-card .btn { align-self: flex-start; margin-top: auto; }
+.clips { display: grid; grid-template-columns: repeat(3, minmax(0, 260px)); justify-content: center; gap: 28px; margin-bottom: 56px; }
+.clip { margin: 0; }
+.phone {
+  position: relative; aspect-ratio: 9 / 16; border-radius: 28px; overflow: hidden; cursor: pointer;
+  background: #000; border: 3px solid rgba(255,255,255,.12);
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
+  transition: transform .45s var(--ease-out), border-color .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.phone video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.clip.sound-on .phone { border-color: rgba(255,45,149,.7); box-shadow: 0 26px 60px -18px rgba(255,45,149,.5), 0 0 40px rgba(255,122,26,.2); }
+@media (hover: hover) { .phone:hover { transform: translateY(-8px); border-color: rgba(255,45,149,.6); box-shadow: 0 26px 60px -18px rgba(255,45,149,.45); } }
+.sound {
+  position: absolute; right: 12px; bottom: 12px; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; border: 1px solid rgba(255,255,255,.25); cursor: pointer;
+  background: rgba(12,6,18,.7); color: #fff; backdrop-filter: blur(8px); pointer-events: none;
+}
+.sound svg { width: 22px; height: 22px; }
+.sound .on, .clip.sound-on .sound .off { display: none; }
+.clip.sound-on .sound .on { display: block; }
+.clip.sound-on .sound { background: var(--pink); border-color: var(--pink); }
+.clip figcaption { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 14px; text-align: center; }
+.clip figcaption b { font-weight: 600; }
+.clip .credit { font-family: var(--mono); font-size: .78rem; color: var(--cyan); }
+a.credit:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  .clips { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; margin-inline: -16px; padding: 4px 16px 12px; scrollbar-width: none; }
+  .clips::-webkit-scrollbar { display: none; }
+  .clip { flex: 0 0 min(68vw, 260px); scroll-snap-align: center; }
+}
 .foot-links a { text-decoration: underline; text-underline-offset: 3px; }
 
 /* The line: FAQ */
