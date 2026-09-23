@@ -180,7 +180,7 @@
   if (clipBox && clips.length) {
     const speaker = '<svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z" fill="currentColor"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z" fill="currentColor"/></svg>';
     clipBox.innerHTML = clips.map((c) => `
-      <figure class="clip reveal">
+      <figure class="clip">
         <div class="phone">
           <video src="${esc(c.src)}" poster="${esc(c.poster)}" muted loop playsinline preload="none" aria-label="${esc(c.title)}"></video>
           <button class="sound" type="button" aria-label="Turn sound on for ${esc(c.title)}" aria-pressed="false">${speaker}</button>
@@ -194,6 +194,24 @@
 
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const figs = [...clipBox.querySelectorAll(".clip")];
+
+    // Scroll entrance: each phone rises and untilts into place as it enters the screen,
+    // staggered left to right within its row.
+    const cols = () => getComputedStyle(clipBox).gridTemplateColumns.split(" ").length || 1;
+    figs.forEach((fig, i) => fig.style.setProperty("--tilt", (i % 2 ? 1 : -1) * 7 + "deg"));
+    if (reduced) figs.forEach((f) => f.classList.add("in"));
+    else {
+      const enter = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const i = figs.indexOf(e.target);
+          e.target.style.setProperty("--delay", (i % cols()) * 110 + "ms");
+          e.target.classList.add("in");
+          enter.unobserve(e.target);
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
+      figs.forEach((f) => enter.observe(f));
+    }
     const setSound = (fig, on) => {
       const v = fig.querySelector("video"), b = fig.querySelector(".sound");
       v.muted = !on;
