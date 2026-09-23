@@ -5,6 +5,8 @@ Plain HTML, CSS and JavaScript. No build step: open `index.html` or serve the fo
 
 ## Layout
 
+`PRODUCT.md` holds the confirmed product facts (audience, locations, hours, evidence) that design work reads first.
+
 ```
 index.html              the whole site (video hero, menu, how it's made, reviews, social, find the truck, the line FAQ)
 css/styles.css          all styles
