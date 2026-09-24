@@ -127,16 +127,17 @@
         </article>
       </div>
 
-      <nav class="menu-jump" aria-label="Jump to a part of the menu">
-        <a href="#menu-starters">Starters</a>
-        <a href="#menu-entrees">Entrees</a>
-        <a href="#menu-combos">Combos</a>
-        <a href="#menu-burritos">Burritos</a>
-        <a href="#menu-keto">Keto bowls</a>
-        <a href="#menu-sides">Sides</a>
-        <a href="#menu-drinks">Drinks</a>
-      </nav>
-      <div class="menu-full">
+      <div class="menu-jump" role="group" aria-label="Show one part of the menu">
+        <button type="button" data-show="all" aria-pressed="true">Full menu</button>
+        <button type="button" data-show="menu-starters" aria-pressed="false" aria-controls="menu-starters">Starters</button>
+        <button type="button" data-show="menu-entrees" aria-pressed="false" aria-controls="menu-entrees">Entrees</button>
+        <button type="button" data-show="menu-combos" aria-pressed="false" aria-controls="menu-combos">Combos</button>
+        <button type="button" data-show="menu-burritos" aria-pressed="false" aria-controls="menu-burritos">Burritos</button>
+        <button type="button" data-show="menu-keto" aria-pressed="false" aria-controls="menu-keto">Keto bowls</button>
+        <button type="button" data-show="menu-sides" aria-pressed="false" aria-controls="menu-sides">Sides</button>
+        <button type="button" data-show="menu-drinks" aria-pressed="false" aria-controls="menu-drinks">Drinks</button>
+      </div>
+      <div class="menu-full" id="menuFull" aria-live="polite">
         <div class="menu-col" id="menu-starters">
           <h3>Starters</h3>
           <ul>

@@ -87,15 +87,29 @@
     }).observe(heroCopy);
   }
 
-  // ---- Menu jump buttons: scroll to that part of the menu and flash it ----
-  document.querySelectorAll(".menu-jump a").forEach((a) => {
-    a.addEventListener("click", () => {
-      const target = document.querySelector(a.getAttribute("href"));
-      if (!target) return;
-      target.classList.remove("flash");
-      void target.offsetWidth; // restart the highlight
-      target.classList.add("flash");
-      setTimeout(() => target.classList.remove("flash"), 1600);
-    });
-  });
+  // ---- Menu filter: pick a category and it becomes the only thing on the menu, centered.
+  //      "Full menu" (or picking the same category again) brings everything back. ----
+  const menuFull = document.getElementById("menuFull");
+  const menuBtns = [...document.querySelectorAll(".menu-jump button")];
+  if (menuFull && menuBtns.length) {
+    const cols = [...menuFull.querySelectorAll(".menu-col")];
+    const show = (id) => {
+      const one = id !== "all" && cols.some((c) => c.id === id);
+      menuFull.classList.toggle("filtered", one);
+      cols.forEach((c) => {
+        const on = one && c.id === id;
+        c.classList.toggle("active", on);
+        c.hidden = one && !on;
+      });
+      menuBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.show === (one ? id : "all"))));
+      // Keep the chosen section in view without jumping past the buttons.
+      const bar = document.querySelector(".menu-jump");
+      const top = bar.getBoundingClientRect().top + scrollY - 90;
+      if (Math.abs(scrollY - top) > 40) scrollTo({ top, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    };
+    menuBtns.forEach((b) => b.addEventListener("click", () => {
+      const already = b.getAttribute("aria-pressed") === "true";
+      show(already && b.dataset.show !== "all" ? "all" : b.dataset.show);
+    }));
+  }
 })();
